@@ -115,7 +115,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'public/images/',
-						src: ['**/*.*'],
+						src: ['**/*.{ai,pdf}'],
 						dest: 'dist/images/',
 						filter: 'isFile'
 					},
@@ -171,6 +171,16 @@ module.exports = function(grunt) {
 				dest: 'dist/css/frontier.min.css'
 			}
 		},
+		imagemin: {
+			dynamic: {
+				files: [{
+				  expand: true,
+				  cwd: 'public/images/',
+				  src: ['**/*.{png,jpg,gif,svg}'],
+				  dest: 'dist/images/'
+				}]
+			}
+		},
 		uglify: {
 			app: {
 				options: {
@@ -188,7 +198,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jade');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-imagemin');
 
-	grunt.registerTask('default', ['clean', 'jade', 'copy', 'cssmin', 'concat:vendor', 'concat:scripts', 'uglify', 'concat:frontier', 'concat:css', 'clean:cleanup_js', 'clean:cleanup_css']);
+	grunt.registerTask('default', ['clean', 'jade', 'copy', 'imagemin', 'cssmin', 'concat:vendor', 'concat:scripts', 'uglify', 'concat:frontier', 'concat:css', 'clean:cleanup_js', 'clean:cleanup_css']);
 	grunt.registerTask('build',   'default');
 };
